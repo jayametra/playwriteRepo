@@ -1,0 +1,72 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: login.spec.js >> Login with invalid credentials - Incorrect credentials
+- Location: tests/login.spec.js:35:5
+
+# Error details
+
+```
+Error: expect(page).toHaveURL(expected) failed
+
+Expected: "https://www.saucedemo.com/inventory.html"
+Received: "https://www.saucedemo.com/"
+Timeout:  5000ms
+
+Call log:
+  - Expect "toHaveURL" with timeout 5000ms
+    14 × locator resolved to <html lang="en">…</html>
+       - unexpected value "https://www.saucedemo.com/"
+
+```
+
+```yaml
+- text: Swag Labs
+- textbox "Username": standard_user_Jaya
+- textbox "Password": secret_sauce_test
+- 'heading "Epic sadface: Username and password do not match any user in this service" [level=3]':
+  - button
+  - text: "Epic sadface: Username and password do not match any user in this service"
+- button "Login"
+- heading "Accepted usernames are:" [level=4]
+- text: standard_user locked_out_user problem_user performance_glitch_user error_user visual_user
+- heading "Password for all users:" [level=4]
+- text: secret_sauce
+```
+
+# Test source
+
+```ts
+  1  | import{expect} from '@playwright/test'
+  2  | 
+  3  | export class LoginPage{
+  4  | constructor(page){
+  5  |     this.page=page 
+  6  |     this.username=page.locator('#user-name')
+  7  |     this.password=page.locator('#password')
+  8  |     this.loginButton=page.locator('#login-button')
+  9  | }
+  10 | async navigateToApplication(){
+  11 |     await this.page.goto('https://www.saucedemo.com/')
+  12 | 
+  13 | }
+  14 | async userLogin(usernamevalue,passwordvalue){
+  15 |     await this.username.fill(usernamevalue)
+  16 |     await this.password.fill(passwordvalue)
+  17 |     await this.loginButton.click()
+  18 | }
+  19 | async validateLoginSuccessfull(){
+> 20 |     await expect(this.page).toHaveURL('https://www.saucedemo.com/inventory.html')
+     |                             ^ Error: expect(page).toHaveURL(expected) failed
+  21 | }
+  22 | 
+  23 | }
+  24 | 
+  25 | 
+  26 | 
+```
