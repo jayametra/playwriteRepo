@@ -19,7 +19,7 @@ test('Locators in Playwright',async({page})=>{
 test.only('Special Locators',async({page})=>{
  await page.goto('https://groceryapp.uniqassosiates.com/admin/login')
  const username = page.locator("//input[@name='username']")
- const username = page.locator("//input[@name='password']")
+ const password = page.locator("//input[@name='password']")
  const signinbutton = page.locator("//button[@type='submit']")
  await username.fill('admin')
  await password.fill('admin')
